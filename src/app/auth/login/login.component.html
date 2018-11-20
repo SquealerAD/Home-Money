@@ -1,0 +1,86 @@
+<p class="text-xs-center">Войдите для работы</p>
+
+<!-- created additional div for displaying messages about wrong credentials  -->
+<div
+  @fade
+  class="alert alert-{{message.type}}"
+  *ngIf="message.text"
+>
+  {{message.text}}
+</div>
+
+<!-- to bind form element with it's component use
+ [formGroup]="form" directive in quotes specify the name
+  of the form in component code-->
+
+<!-- to bind form elements to it's component add to every element
+     [formControlName]="'wantedName'" directive so the component code
+     will see the element
+ -->
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <!-- add [ngClass]="{'has-error': condition}"
+       has-error class will appear when email.invalid == true && email.required == true
+  -->
+  <div
+    class="form-group"
+    [ngClass]="{'has-error': form.get('email').invalid && form.get('email').touched}"
+  >
+    <label for="email">Email</label>
+    <input [formControlName]="'email'"
+      type="text"
+      class="form-control underlined"
+      id="email"
+      placeholder="Введите ваш email"
+    >
+    <!-- to display credentials errors add span element for error with
+     *ngIf="form.get('email').invalid && form.get('email').touched" (condition directive)
+     the inner spans here will present needed error.
+    -->
+    <span
+      class="form-help-text"
+      *ngIf="form.get('email').invalid && form.get('email').touched"
+    >
+      <span *ngIf="form.get('email')['errors']['required']">Email не может быть пустым</span>
+      <span *ngIf="form.get('email')['errors']['email']">Введите коректный email</span>
+    </span>
+  </div>
+
+  <div
+    class="form-group"
+    [ngClass]="{'has-error': form.get('password').invalid && form.get('password').touched}"
+  >
+    <label for="password">Пароль</label>
+    <input
+      [formControlName]="'password'"
+      (input)="onInput()"
+      type="password"
+      class="form-control underlined"
+      id="password"
+      placeholder="Пароль"
+    >
+    <span
+      class="form-help-text"
+      *ngIf="form.get('password').invalid && form.get('password').touched"
+    >
+      <span *ngIf="form.get('password')['errors']['required']">Пароль не может быть пустым</span>
+      <span *ngIf="form.get('password')['errors']['minlength'] && form.get('password')['errors']['minlength']['requiredLength']">Пароль должен быть больше {{form.get('password')['errors']['minlength']['requiredLength']}}  символов. Сейчас {{form.get('password')['errors']['minlength']['actualLength']}} </span>
+    </span>
+  </div>
+  <div class="form-group">
+    <!-- disable submit button while form is invalid -->
+    <button
+      type="submit"
+      class="btn btn-block btn-primary"
+      [disabled]="form.invalid"
+    >
+      Войти
+    </button>
+  </div>
+  <div class="form-group">
+    <p class="text-muted text-xs-center">
+      <!-- use [routerLink]="/nameOfPage" to route to wanted page -->
+      Нет аккаунта? <a [routerLink]="'/registration'">Зарегистрироваться!</a>
+    </p>
+  </div>
+</form>

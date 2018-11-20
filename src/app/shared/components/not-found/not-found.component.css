@@ -1,0 +1,11 @@
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh; }
+
+.not-found h1 {
+  color: red; }
+
+/*# sourceMappingURL=not-found.component.css.map */

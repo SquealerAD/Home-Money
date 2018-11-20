@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,SAAS;EACP,OAAO,EAAE,KAAK",
+"sources": ["history-filter.component.scss"],
+"names": [],
+"file": "history-filter.component.css"
+}
